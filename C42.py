@@ -108,12 +108,11 @@ class MarsPhotoApp(MDApp):
         sol = self.sol_input.text.strip()
         self.gallery.clear_widgets()
 
-        url = f"https://api.nasa.gov/mars-photos/api/v1/rovers/curiosity/photos?sol={sol}&api_key=AgX4ATQ5X1CaSce2sxNaEfiM8Cs1UZhPlhYqMin2"
-
+        url = f"https://mars-photo-api-dyzg.onrender.com/api/v1/rovers/Curiosity/photos?sol={sol}"
         try:
             response = requests.get(url)
             data = response.json()
-            photos = data["photos"][:10]  # Show only first 10
+            photos = data["photos"][:6]  # Show only first 6
 
             if not photos:
                 self.gallery.add_widget(MDLabel(
