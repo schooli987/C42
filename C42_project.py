@@ -10,6 +10,8 @@ from kivymd.uix.label import MDLabel
 from kivymd.uix.textfield import MDTextField
 from kivymd.uix.toolbar import MDTopAppBar
 
+API_KEY="d0730148-3e9a-419f-80a2-ec1aa0077949"
+
 planet_images = {
     "mercury": "https://upload.wikimedia.org/wikipedia/commons/4/4a/Mercury_in_true_color.jpg",
     "venus": "https://upload.wikimedia.org/wikipedia/commons/e/e5/Venus-real_color.jpg",
@@ -79,9 +81,13 @@ class PlanetInfoApp(MDApp):
             self.planet_image.source = ""
             return
 
-        url = f"https://api.le-systeme-solaire.net/rest.php/bodies/{planet}"
+        url = f"https://api.le-systeme-solaire.net/rest/bodies/{planet}"
+        headers={
+            "Authorization": f"Bearer {API_KEY}",
+            "Accept": "application/json"
+        }
         try:
-            response = requests.get(url)
+            response = requests.get(url, headers=headers, timeout=10)
             if response.status_code == 200:
                 data = response.json()
                 gravity = data.get('gravity', 'N/A')
